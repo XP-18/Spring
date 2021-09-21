@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="jdbc.properties"/>
+    <bean id="dataresouce" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataresouce"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="SqlSessionFactory"/>
+<!--        1.指定包名，MapperScannerConfigurer会自动将这个包中所有！！接口！！进行一次getMapper（）方法，然后把得到
+         的dao对象放入容器
+         这个dao对象是代理对象可直接使用其中的方法 见testSpringObject方法
+            2.经过这一步可以就存在studentDao代理对象可以直接getBean()得到，然后执行其方法-->
+        <property name="basePackage" value="top.xp18.Dao"/>
+    </bean>
+<!--    使得StudentServiceImpl类可以使用代理的Dao-->
+    <bean id="mystudentservice" class="top.xp18.service.StudentServiceImpl">
+        <property name="studentDao" ref="studentDao"/>
+    </bean>
+</beans>

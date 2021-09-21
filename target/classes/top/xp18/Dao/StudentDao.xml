@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.xp18.Dao.StudentDao">
+    <select id="selectAll" resultType="top.xp18.domain.Student">
+        select *
+        from student
+  </select>
+    <insert id="addStu" >
+      insert into student values (#{name},#{num},#{sex})
+    </insert>
+    <delete id="deleteStu" >
+        delete from student  where num=#{num}
+    </delete>
+    <update id="updateStu" >
+        update student set name =#{student.name},num=#{student.num},sex=#{student.sex} where num=#{num}
+    </update>
+</mapper>
