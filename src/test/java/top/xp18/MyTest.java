@@ -15,7 +15,7 @@ public class MyTest {
     @Test
     public void testSpringObject() {
         Student student1=new Student(),student2=new Student();
-        School school=new School("九江","九江学院");
+        School school=new School("九江","九江大学");
         student1.setSchool(school);
         student2.setSchool(school);
         System.out.println(student1.equals(student2));
